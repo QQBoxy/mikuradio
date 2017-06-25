@@ -1,0 +1,459 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-TW" xml:lang="zh-TW" dir="<$BlogLanguageDirection$>">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><$BlogPageTitle$></title>
+<link href='http://2.bp.blogspot.com/-al-2QJHDr2Y/T19dfDwc-cI/AAAAAAAAEA8/pVCCkMu_BWQ/s0/mikuradio.png' rel='icon' type='image/x-icon'/>
+<link href='http://2.bp.blogspot.com/-al-2QJHDr2Y/T19dfDwc-cI/AAAAAAAAEA8/pVCCkMu_BWQ/s0/mikuradio.png' rel='Bookmark'/>
+<link href='http://2.bp.blogspot.com/-al-2QJHDr2Y/T19dfDwc-cI/AAAAAAAAEA8/pVCCkMu_BWQ/s0/mikuradio.png' rel='shortcut icon'/>
+<script type="text/javascript">
+(function() {
+//No country redirect
+var regex = new RegExp(/\.blogspot\.(com\...\/|..\/)/);
+if( document.URL.match(regex) ) {
+	var url = document.URL;
+	url = url.replace(url.match(regex)[0], ".blogspot.com\/ncr\/");
+	document.location = url;
+}
+}());
+/* </head> */</script>
+<script src='https://www.youtube.com/iframe_api'></script>
+<style>
+body {
+	margin: 0;
+	background: #fff url(https://lh6.googleusercontent.com/-e4Cb1LegSxE/UId389VHJMI/AAAAAAAAEjM/Y1gn9ddap0w/s0/1347632559813.jpg) center center fixed no-repeat;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+#body {
+	width: 980px;
+	margin: 0 auto 0px;
+}
+.frame {
+	margin: 10px 5px;
+}
+.title {
+	padding: 10px;
+	height: 16px;
+	color: white;
+	font-weight: bold;
+	background-color: gray;
+}
+/*左區塊*/
+.frame.leftframe {
+	float: left;
+	width: 640px;
+	height: 600px;
+	position: relative;
+}
+#playerboxy{
+	height: 390px;
+}
+#toolbar{
+	width: 640px;
+	height: 26px;
+	position: absolute;
+	bottom: 179px;
+}
+#information{
+	width: 640px;
+	height: 174px;
+	position: absolute;
+	bottom: 0;
+	background-color: white;
+}
+/*右區塊*/
+.frame.rightframe {
+	float: left;
+	width: 320px;
+	background-color: white;
+}
+#videolist {
+	overflow: auto;
+	height: 564px;
+}
+#videolist .list {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	background-color: white;
+}
+#videolist .list:hover {
+	cursor: pointer;
+	background-color: lightblue;
+}
+#toolbar {
+	clear: both;
+}
+#info_table {
+	width: 100%;
+}
+#info_table .info_list {
+	background-color: white;
+}
+#info_table .info_list:hover {
+	background-color: lightblue;
+}
+/*下區塊*/
+.frame.buttomframe {
+	margin: 10px 5px;
+	clear: both;
+	width: 980px;
+}
+#faq {
+	width: 960px;
+	background-color: white;
+	padding: 5px;
+}
+.symbol {
+	margin-left: -5px;
+	text-align: center;
+	display: block;
+	float: left;
+	width: 20px;
+}
+button {
+	height: 26px;
+	line-height: 20px;
+}
+</style>
+</head>
+<!-- <body> -->
+<body>
+<div id="body">
+	<div class="frame leftframe">
+		<div id="playerboxy"></div>
+		<div id="toolbar">
+			<button id="prev"><span class="symbol">←</span>上一首</button> |
+			<button id="next"><span class="symbol">→</span>下一首</button> |
+			<button id="mode"><span class="symbol">↔</span>隨機模式</button> |
+			<button id="loop"><span class="symbol">⇆</span>循環播放</button>
+		</div>
+		<div id="information">
+			<div class="title">播放資訊</div>
+			<table id="info_table">
+				<tr class="info_list"><td id="lang_info_keyword">【搜索名稱】</td><td id="info_keyword"></td></tr>
+				<tr class="info_list"><td id="lang_info_result">【搜索結果】</td><td id="info_result"></td></tr>
+				<tr class="info_list"><td id="lang_info_artist">【演唱歌手】</td><td id="info_artist"></td></tr>
+				<tr class="info_list"><td id="lang_info_bpm">【節拍速度】</td><td id="info_bpm"></td></tr>
+			</table>
+		</div>
+	</div>
+	<div class="frame rightframe">
+		<div class="title">播放清單</div>
+		<div id="videolist"></div>
+	</div>
+	<div class="frame buttomframe">
+		<span id="help" style="cursor:pointer;">(?)</span>
+		<div id="faq" style="display:none">
+		--- 初音ミクラジオ 鍋燒烏龍麵版(Nabeyaki Udon) ---
+		<br />
+		音樂清單：<a target="_blank" href="https://docs.google.com/spreadsheet/pub?key=0AsHdyDgIiLuHdEI1UExBMWNqWlB1QlI1RVl4eGtyWVE&output=html">打開</a><br />
+		<br />
+		概念啟發：<br />
+		發現朋友在使用Youtube播放清單時，出現了廣告還有被封鎖的音樂還頗困擾的。<br />
+		<br />
+		原理說明：<br />
+		由Google雲端硬碟讀取隨機初音ミク音楽清單，使用Youtube Search API搜尋關鍵字第一筆的影片進行播放，因此搜尋之結果不保證百分百準確:p<br />
+		<br />
+		更新履歷：<br />
+		<ul>
+		<li>陽春麵</li>
+		<li>[0.1.0] 隨機清單播放架構 - 2012.3.12</li>
+		<li>[0.1.1] Help(?)、去除關鍵字『太鼓、歌ってみた』、上下曲、重複播放 - 2012.3.13</li>
+		<li>[0.1.2] IE BUG修正進度50% - 2012.3.14</li>
+		<li>[0.1.3] 修改清單關鍵字格式 - 2012.3.17</li>
+		<li>[0.1.4] 修正Sharp標題錯誤 - 2012.11.21</li>
+		<li>鍋燒烏龍麵</li>
+		<li>[0.2.0] 操作介面改版、資訊處理改版 - 2014.5.7</li>
+		<li>[0.2.1] 加入播放模式、循環模式、播放清單 - 2014.5.8</li>
+		<li>[0.2.2] 加入404找不到影片 - 2014.5.12</li>
+		<li>[0.2.3] 更新Youtube搜尋引擎 - 2015.4.21</li>
+		<li>[0.2.4] 修正搜尋失敗的問題 - 2015.5.18</li>
+		<li>[0.2.5] 更新Youtube搜尋引擎 - 2015.11.3</li>
+		</ul>
+		<br />
+		後台管理：<a href="https://www.blogger.com/blogger.g?blogID=3720255552847333016">Blogspot</a><br />
+		<br />
+		作者後記：<br />
+		由於bpm選曲功能還在修羅場中(明明就沒有很難XD)，<br />
+		有想要加入的曲名可在 <a target="_blank" href="http://chatboxy.blogspot.com/">聊天室</a> 留言，但不保證都會加就是了(咦!?)<br />
+		<br />
+		此網站皆由 QQBoxy 製作設計。<br />
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+//全域變數宣告
+var playerboxy; //Youtube播放器物件
+var list = []; //曲目清單
+var random = []; //隨機序列
+var now_playing = 0; // 正常模式下代表曲目，隨機模式下代表id
+var prev_playing = 0; //記錄上一首音樂
+var first_playing = 0; //記錄第一首音樂
+var mode = 0; // 0:隨機 1:單曲 2:全部
+var loop = 1; // 0:不循環 1:循環
+
+//自訂功能函式
+var $ = function(id) {
+	switch(id.substr(0,1)) {
+		case '#':
+			return document.getElementById(id.substr(1));
+		case '.':
+			var elems = document.body.getElementsByTagName('*');
+			var target = id.substr(1);
+			var result=[];
+			for(i=0;j=elems[i];i++) {
+				if((j.className).indexOf(target)!=-1) result.push(j);
+			}
+			return result;
+		default:
+			return document.getElementsByTagName(id);
+	}
+};
+
+var getjsonp = function() {
+	this.head = document.getElementsByTagName('head')[0] || document.documentElement;
+	this.current = null;
+	this.queue = [];
+};
+getjsonp.prototype.request = function(q) {
+	var fid = (q.fid||'_getjsonp') + new Date().getTime();
+	console.log(fid);
+	var script = document.createElement('script');
+	script.src = q.url.replace('callback=?', 'callback=' + fid);
+	this.queue.push({
+		fid : fid,
+		script : script,
+		load : q.load
+	});
+	if(!this.current) this.action();
+};
+getjsonp.prototype.action = function() {
+	var self = this;
+	this.current = null;
+	if(this.queue.length) {
+		this.current = this.queue.shift();
+		window[this.current.fid] = function(data) {
+			self.head.removeChild(self.current.script);
+			self.current.load && self.current.load(data);
+			self.action();
+		};
+		this.head.appendChild(this.current.script);
+	}
+};
+
+var getVideo = function(key, callback) {
+	key = key.replace(/[,-]/g, ' ');
+	var jsonp = new getjsonp();
+	jsonp.request({
+		fid : '_mikujsonp',
+		url : "https://www.googleapis.com/youtube/v3/search"+
+			//"?key=AIzaSyAoTb-OSRRcMGEvyMXAzNnm8Ts6USC6R4E"+ //Develop
+			"?key=AIzaSyA8_6UWuAvFb4JZKaWb7Hxnmdnf0YWp4qQ"+ //Release
+			"&part=snippet"+
+			"&maxResults=1"+
+			"&q="+key+
+			"&callback=?",
+		load : function(data) {
+			console.log(JSON.stringify(data, null, 2));
+			if(data.items.length == 0) {
+				search("【初音ミク】 残念ながらお求めの動画はみつかりませんでした", callback);
+			} else {
+				callback({
+					title : data.items[0].snippet.title,
+					id : data.items[0].id.videoId
+				});
+			}
+		}
+	});
+};
+
+var init = function(jsonlist) {
+	var output = "";
+	for(var i=0;i<jsonlist.feed.entry.length;i++) {
+		var video = jsonlist.feed.entry[i].content.$t;
+		var newtrack = listobj(video);
+		list.push(newtrack);
+		output += "<div class=\"list\" id=\"track" + i.toString() + "\">" + newtrack.title + "</div>";
+		random.push(i);
+	}
+	$('#videolist').innerHTML = output;
+	for(var i=0;i<random.length;i++) {
+		var r = parseInt(Math.random()*random.length);
+		if(i!=r) {
+			var temp = random[i];
+			random[i] = random[r];
+			random[r] = temp;
+		}
+	}
+	playerboxy = new YT.Player('playerboxy', {
+		height: '390',
+		width: '640',
+		events: {
+			'onReady': onPlayerReady,
+			'onStateChange': onPlayerStateChange
+		}
+	});
+};
+
+var listobj = function(video) {
+	var p_artist = video.indexOf(', artist: ');
+	var p_speed = video.indexOf(', speed: ');
+	var title = video.substring(7, p_artist);
+	var artist = video.substring(p_artist+10, p_speed);
+	var speed = video.substring(p_speed+9, video.length);
+	return {
+		title : title,
+		artist : artist,
+		speed : speed
+	};
+};
+var play = new function() {
+	return {
+		now : function(track) {
+			prev_playing = now_playing;
+			if(mode == 0) {
+				for(var i=0;i<random.length;i++) {
+					if(random[i] == track) {
+						now_playing = i;
+					}
+				}
+			} else {
+				now_playing = track;
+			}
+		},
+		next : function() {
+			prev_playing = now_playing;
+			if(now_playing>=(list.length-1)) { //末曲處理
+				now_playing = 0;
+			} else {
+				now_playing = now_playing + 1;
+			}
+		},
+		prev : function() {
+			prev_playing = now_playing;
+			if(now_playing<=0) { //首曲處理
+				now_playing = list.length - 1;
+			} else {
+				now_playing = now_playing - 1;
+			}
+		}
+	};
+};
+
+var do_play = function(){
+	var track = {};
+	if(mode == 0) {
+		track = list[random[now_playing]];
+	} else {
+		track = list[now_playing];
+	}
+	getVideo(track.title, function(video) {
+		$('#info_keyword').innerHTML = track.title;
+		$('#info_result').innerHTML  = video.title;
+		$('#info_artist').innerHTML  = track.artist;
+		$('#info_bpm').innerHTML     = track.speed;
+		
+		var oldTrackListId = 0;
+		var newTrackListId = 0;
+		if(mode == 0) {
+			var oldTrackListId = random[prev_playing].toString();
+			var newTrackListId = random[now_playing].toString();
+		} else {
+			var oldTrackListId = prev_playing.toString();
+			var newTrackListId = now_playing.toString();
+		}
+		$('#track'+oldTrackListId).style.backgroundColor = 'white';
+		$('#track'+newTrackListId).style.backgroundColor = 'lightgray';
+		
+		playerboxy.loadVideoById({
+			videoId: video.id,
+			suggestedQuality: 'default'
+		});
+	});
+};
+
+//Youtube事件
+function onYouTubePlayerAPIReady() {
+	var listurl = 'https://spreadsheets.google.com/feeds/list/0AsHdyDgIiLuHdEI1UExBMWNqWlB1QlI1RVl4eGtyWVE/od6/public/basic?alt=json';
+	var script = document.createElement('script');
+	script.type = 'text/javascript';
+	script.src = listurl + '&callback=init&t=' + new Date().getTime();
+	$('head')[0].appendChild(script);
+};
+function onPlayerReady(event) {
+	do_play();
+	event.target.playVideo();
+}
+function onPlayerStateChange(event) {
+	if(event.data == YT.PlayerState.ENDED) {
+		if(mode == 0 || mode == 2) {
+			play.next();
+			if(first_playing == now_playing) { //循環終止
+				play.prev();
+				return;
+			}
+			do_play();
+		} else {
+			event.target.playVideo();
+		}
+	}
+}
+
+$('#mode').onclick = function() {
+	if(mode == 0) {
+		now_playing = random[now_playing];
+		$('#mode').innerHTML = "<span class=\"symbol\">1</span>單曲播放";
+		mode = 1;
+	} else if(mode == 1) {
+		$('#mode').innerHTML = "<span class=\"symbol\">↺</span>全曲播放";
+		mode = 2;
+	} else if(mode == 2) {
+		for(var i=0;i<random.length;i++) {
+			if(random[i] == now_playing) {
+				now_playing = i;
+			}
+		}
+		$('#mode').innerHTML = "<span class=\"symbol\">↔</span>隨機模式";
+		mode = 0;
+	}
+};
+$('#loop').onclick = function() {
+	if(loop == 0) {
+		$('#loop').innerHTML = "<span class=\"symbol\">⇆</span>循環播放";
+		loop = 1;
+	} else if(loop == 1) {
+		$('#loop').innerHTML = "<span class=\"symbol\">⇉</span>順序播放";
+		loop = 0;
+	}
+};
+$('#prev').onclick = function() {
+	first_playing = now_playing;
+	play.prev();
+	do_play();
+};
+$('#next').onclick = function() {
+	first_playing = now_playing;
+	play.next();
+	do_play();
+};
+$('#videolist').onclick = function(e) {
+	if(e.target) {
+		var id = e.target.id;
+		var track = parseInt(id.substring(5, id.length));
+		play.now(track);
+		do_play();
+	}
+};
+$('#help').onclick = function() {
+	if($('#faq').style.display == 'none') {
+		$('#faq').style.display = '';
+	} else {
+		$('#faq').style.display = 'none';
+	}
+};
+</script>
+<!-- </body> -->
+</body>
+</html>
